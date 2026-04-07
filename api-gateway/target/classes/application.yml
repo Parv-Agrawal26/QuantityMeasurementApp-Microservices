@@ -21,22 +21,22 @@ spring:
             allowCredentials: true
       routes:
         - id: auth-service
-          uri: http://localhost:8081
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/api/v1/auth/**
 
         - id: oauth2-auth-service
-          uri: http://localhost:8081
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/oauth2/**
 
         - id: oauth2-login
-          uri: http://localhost:8081
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/login/oauth2/**
 
         - id: measurement-service
-          uri: http://localhost:8082
+          uri: ${MEASUREMENT_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/api/v1/quantities/**
 
