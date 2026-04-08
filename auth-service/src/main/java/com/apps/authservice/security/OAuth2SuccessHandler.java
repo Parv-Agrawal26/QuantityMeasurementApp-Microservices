@@ -41,6 +41,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
         clearAuthenticationAttributes(request);
         getRedirectStrategy().sendRedirect(request, response,
-                "http://localhost:5173/oauth2-callback?token=" + token);
+                System.getenv().getOrDefault("FRONTEND_URL", "http://localhost:5173") + "/oauth2-callback?token=" + token);
     }
 }
