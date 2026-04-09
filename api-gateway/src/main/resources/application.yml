@@ -21,11 +21,13 @@ spring:
               - "*"
             allowCredentials: true
       routes:
+        # Auth Service - API
         - id: auth-service
           uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/api/v1/auth/**
 
+        # Auth Service - OAuth2
         - id: oauth2-auth-service
           uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
@@ -36,10 +38,57 @@ spring:
           predicates:
             - Path=/login/oauth2/**
 
+        # Auth Service - Swagger UI
+        - id: auth-service-swagger-ui
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/auth/swagger-ui/**
+          filters:
+            - RewritePath=/auth/swagger-ui/(?<segment>.*), /swagger-ui/$\{segment}
+
+        - id: auth-service-swagger-html
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/auth/swagger-ui.html
+          filters:
+            - RewritePath=/auth/swagger-ui.html, /swagger-ui.html
+
+        # Auth Service - OpenAPI Docs
+        - id: auth-service-api-docs
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/auth/v3/api-docs/**
+          filters:
+            - RewritePath=/auth/v3/api-docs(?<segment>/?.*), /v3/api-docs$\{segment}
+
+        # Measurement Service - API
         - id: measurement-service
           uri: ${MEASUREMENT_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/api/v1/quantities/**
+
+        # Measurement Service - Swagger UI
+        - id: measurement-service-swagger-ui
+          uri: ${MEASUREMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/measurement/swagger-ui/**
+          filters:
+            - RewritePath=/measurement/swagger-ui/(?<segment>.*), /swagger-ui/$\{segment}
+
+        - id: measurement-service-swagger-html
+          uri: ${MEASUREMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/measurement/swagger-ui.html
+          filters:
+            - RewritePath=/measurement/swagger-ui.html, /swagger-ui.html
+
+        # Measurement Service - OpenAPI Docs
+        - id: measurement-service-api-docs
+          uri: ${MEASUREMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/measurement/v3/api-docs/**
+          filters:
+            - RewritePath=/measurement/v3/api-docs(?<segment>/?.*), /v3/api-docs$\{segment}
 
 server:
   port: 8080

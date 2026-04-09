@@ -28,9 +28,12 @@ public class SecurityConfig {
                     "/api/v1/quantities/add",
                     "/api/v1/quantities/subtract",
                     "/api/v1/quantities/divide",
+                    "/v3/api-docs",
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
-                    "/swagger-ui.html"
+                    "/swagger-ui.html",
+                    "/swagger-resources/**",
+                    "/webjars/**"
                 ).permitAll()
                 .requestMatchers(
                     "/api/v1/quantities/history",
